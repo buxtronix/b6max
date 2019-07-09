@@ -559,9 +559,11 @@ type ProgramStart struct {
 
 // Encode encodes a ProgramStart request.
 func (p *ProgramStart) encode() *packet {
+	p1 := *p
+	p1.PwmMode = ProgramType(programTypeMap[p.BatteryType][p.PwmMode])
 	pk := &packet{}
 	pk.init(0x05)
-	pk.writeData(p)
+	pk.writeData(&p1)
 	return pk
 }
 
